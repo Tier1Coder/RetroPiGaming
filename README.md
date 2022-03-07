@@ -1,5 +1,5 @@
 # PS3-and-Xbox-360-gamepad
-Creating gamepad for beginners using Arduino and Arduino's shield (2 approaches)
+Creating gamepad for beginners using Arduino and Arduino's shield 
 
 This tutorial is designed for people having issues with programming software and connecting hardware together, highly recommended for beginners. I am a person who met some issues during this little project and wanted to share it with other people.
 
