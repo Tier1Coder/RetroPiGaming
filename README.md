@@ -1,4 +1,4 @@
-# Arduino Gamepad
+# Arduino Uno Gamepad
 Creating gamepad for beginners using Arduino and Arduino's shield 
 
 This tutorial is designed for people having issues with programming software and connecting hardware together, highly recommended for beginners. I am a person who met some issues during this little project and wanted to share it with other people.
@@ -40,8 +40,15 @@ BTW. we need BlankDataForController - we might get some trash data so this built
 However we need to use some conversion with abs value with Y axis.
 
 
-
+HOW TO PUT IT ALL INTO TOGETHER:
+1) Connect Arduino to your computer.
+2) Load the .ino file to it with your gamepad's code.
+3) Use (for example) screwdriver to connect to pins to enter Arduino's DFU mode.
+4) Launch TurnIntoJoystick from UnoJoy folder.
+5) Unplug Arduino.
+6) Plug it back with your shield.
+7) Enjoy.
 
 NOTES:
 1) Gamepad works with PC. Using it with PS3 or X360 or any other console will probably not work because of some kind of security chip.
-2) You can switch between PS3 and X360 configurations (or create your own) by using if statements in setup. So if the D3 button is pressed when turning on the Gamepad from USB port, we get first configuration, when D4 - second etc. however you will be happy with one setup probably so I do not share the code.
+2) You can switch between PS3 and X360 configurations (or create your own) by using if statements in setup. So if the D3 button is pressed when turning on the Gamepad from USB port, we get first configuration, when D4 - second etc. however you will be happy with one setup probably so I will not share the code - you can change the pins how you want by yourself.
