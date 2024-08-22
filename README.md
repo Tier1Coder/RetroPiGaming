@@ -1,54 +1,58 @@
 # Arduino Uno Gamepad
-Creating gamepad for beginners using Arduino and Arduino's shield 
 
-This tutorial is designed for people having issues with programming software and connecting hardware together, highly recommended for beginners. I am a person who met some issues during this little project and wanted to share it with other people.
+This project is a simple tutorial for creating a gamepad using an Arduino Uno and a compatible shield, tailored especially for beginners. If you're new to programming or working with hardware, this guide will walk you through the necessary steps to get your gamepad up and running.
 
-Remember that you have to program it by your own. The pieces I use work perfectly with each other, but other parts probably need to be configurated differently.
+I encountered several challenges during this project, and I hope to help others avoid the same pitfalls by sharing my experiences and solutions.
 
-I am using Windows 10.
+## Table of Contents
 
-SETUP (HARDWARE):
-Arduino UNO R3
-My shield has 4 buttons and joystick buttons (photo).
+- [Hardware Setup](#hardware-setup)
+- [Software Setup](#software-setup)
+- [Explanation](#explanation)
+- [Putting It All Together](#putting-it-all-together)
+- [Notes](#notes)
 
-SOFTWARE:
-- Arduino IDE
-- UnoJoy library and whole file with Atmel's FLIP that you can download from: https://github.com/AlanChatham/UnoJoy
-Remember to add library to your Arduino IDE.
-- Updated JRE (Java Runtime Environment) -> it is needed for turning into Joystick and vice versa (from: UnoJoy folder). Without this we will meet jvm.dll error. Note: If you can not update you need to reinstall. 
-https://www.java.com/en/download/help/error_mainclass.html
-Reinstallation makes your jre updated.
-Some of java installers does not work properly or they are not needed for this project (they are some kind of "exceptions" I can say). You need to find the good one, name of my file that works: jre-8u321-windows-i586, try to google it or find on java's official site.
+## Hardware Setup
 
-You can also try to check if you have your java already installed by:
-1) Open the command prompt. Follow the menu path Start > Programs > Accessories > Command Prompt
-2) Type command: java -version and press Enter on your keyboard.
+You'll need the following components:
 
+- **Arduino UNO R3**
+- **Shield with 4 buttons and a joystick** (see photo)
 
+## Software Setup
 
+1. **Arduino IDE**
+2. **UnoJoy Library**: This library, along with the necessary files for Atmel's FLIP, can be downloaded from [this GitHub repository](https://github.com/AlanChatham/UnoJoy). Make sure to add the library to your Arduino IDE.
+3. **Java Runtime Environment (JRE)**: You'll need an updated JRE to use the `TurnIntoJoystick` function from the UnoJoy folder. Without it, you might encounter the `jvm.dll` error. If updating fails, try reinstalling JRE. I recommend version `jre-8u321-windows-i586`, which you can find on Java's official site or through a quick search.
 
-EXPLANATION:
-.ino file that is designed for Xbox 360 controller (originally it is designed for PS3 controllers - I will not paste the code for PS3 because it is already in Example Sketches):
-1) Include our UnoJoy library that is created for Arduino Uno. Link to the library: https://github.com/AlanChatham/UnoJoy
-2) Create variables. I use uint8_t for lower memory usage. Check what kind of digital pins your shield uses and assign correct variables if you use another setup.
-3) x and y are analog of course.
-4) setupPins: we check the inputs of our digital pins and set them HIGH - the button is pressed when it's LOW (logic).
-5) in loop we use another function that is:
-6) dataForController_t getControllerData - and we configure our inputs to do some kind of operations as Joystick.
-BTW. we need BlankDataForController - we might get some trash data so this built-in UnoJoy function converts it properly.
-7) We can see whole configuration for my shield - I want to have triangle, circle, square and cross buttons for using items etc. in game. Start for going to the menu (otherwise that would not be possible). Then ofc X axis and Y axis. 
-However we need to use some conversion with abs value with Y axis.
+   You can verify your JRE installation by:
+   1. Opening the Command Prompt (`Start > Programs > Accessories > Command Prompt`).
+   2. Typing `java -version` and pressing Enter.
 
+## Explanation
 
-HOW TO PUT IT ALL INTO TOGETHER:
-1) Connect Arduino to your computer.
-2) Load the .ino file to it with your gamepad's code.
-3) Use (for example) screwdriver to connect to pins to enter Arduino's DFU mode.
-4) Launch TurnIntoJoystick from UnoJoy folder.
-5) Unplug Arduino.
-6) Plug it back with your shield.
-7) Enjoy.
+The `.ino` file provided is designed to mimic an Xbox 360 controller (originally intended for PS3 controllers, which can be found in the Example Sketches).
 
-NOTES:
-1) Gamepad works with PC. Using it with PS3 or X360 or any other console will probably not work because of some kind of security chip.
-2) You can switch between PS3 and X360 configurations (or create your own) by using if statements in setup. So if the D3 button is pressed when turning on the Gamepad from USB port, we get first configuration, when D4 - second etc. however you will be happy with one setup probably so I will not share the code - you can change the pins how you want by yourself.
+### Key Points:
+1. **Include the UnoJoy Library**: This library is specifically created for Arduino Uno. You can find it [here](https://github.com/AlanChatham/UnoJoy).
+2. **Variable Creation**: Use `uint8_t` for lower memory usage. Assign the correct variables based on the digital pins your shield uses.
+3. **Analog Inputs**: `x` and `y` correspond to the analog inputs.
+4. **setupPins Function**: This function checks the inputs of the digital pins, setting them to HIGH. The button is pressed when the pin is LOW (logic).
+5. **Loop Function**: The `dataForController_t getControllerData` function is used to configure your inputs to behave as a joystick.
+   - Use `BlankDataForController` to clean up any garbage data. This built-in UnoJoy function ensures proper conversion.
+6. **Shield Configuration**: The example provided configures the shield to have buttons corresponding to triangle, circle, square, and cross, which are used for in-game actions. The `Start` button accesses the menu, and the X and Y axes are configured with a conversion using the absolute value of the Y-axis.
+
+## Putting It All Together
+
+1. Connect the Arduino to your computer.
+2. Upload the `.ino` file containing your gamepad's code to the Arduino.
+3. Use a tool (e.g., a screwdriver) to connect to the pins, entering Arduino's DFU mode.
+4. Launch `TurnIntoJoystick` from the UnoJoy folder.
+5. Unplug the Arduino.
+6. Plug it back in with your shield attached.
+7. Enjoy your new gamepad!
+
+## Notes
+
+1. **PC Compatibility**: This gamepad works with a PC. It is unlikely to work with consoles like the PS3 or Xbox 360 due to security chips.
+2. **Configurable Setup**: You can switch between PS3 and Xbox 360 configurations (or create your own) using `if` statements in the `setup` function. For example, if button D3 is pressed when the Gamepad is turned on, it will load the first configuration; if D4 is pressed, it will load the second, and so on. However, one configuration is usually sufficient, so I haven't provided additional code for this. Feel free to adjust the pin assignments as needed.
