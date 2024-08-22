@@ -81,3 +81,7 @@ If you encounter any issues during the setup process, consider the following sol
 
 - **No SSH Access**: Ensure that SSH is enabled on the Raspberry Pi and that you have the correct IP address.
 - **Gamepad Not Working**: Double-check the Arduino wiring and configuration. Make sure the UnoJoy library was correctly installed.
+
+
+## **Using with PC*
+This gamepad can be used with PC. Launch the script, connect to the proper COM port that will receive inputs from Arduino's gamepad.
