@@ -1,58 +1,83 @@
-# Arduino Uno Gamepad
+# RetroPie Gaming Setup on Raspberry Pi 4 with Arduino Uno R3 Gamepad
 
-This project is a simple tutorial for creating a gamepad using an Arduino Uno and a compatible shield, tailored especially for beginners. If you're new to programming or working with hardware, this guide will walk you through the necessary steps to get your gamepad up and running.
-
-I encountered several challenges during this project, and I hope to help others avoid the same pitfalls by sharing my experiences and solutions.
+This repository provides a comprehensive guide for setting up a retro gaming console using a Raspberry Pi 4, installing RetroPie, configuring an Arduino Uno as a gamepad, and installing games via SSH. Whether you're a retro gaming enthusiast or a beginner, this guide will help you build and configure your own gaming console.
 
 ## Table of Contents
 
-- [Hardware Setup](#hardware-setup)
-- [Software Setup](#software-setup)
-- [Explanation](#explanation)
-- [Putting It All Together](#putting-it-all-together)
-- [Notes](#notes)
+- [Introduction](#introduction)
+- [Hardware Requirements](#hardware-requirements)
+- [Software Requirements](#software-requirements)
+- [Setup Guide](#setup-guide)
+  - [1. Setting Up Raspberry Pi 4 with RetroPie](#1-setting-up-raspberry-pi-4-with-retropie)
+  - [2. Configuring Arduino Uno as a Gamepad](#2-configuring-arduino-uno-as-a-gamepad)
+  - [3. Installing Games via SSH](#3-installing-games-via-ssh)
+- [Troubleshooting](#troubleshooting)
 
-## Hardware Setup
+## Introduction
 
-You'll need the following components:
+This guide is designed to help you set up a complete retro gaming console using a Raspberry Pi 4 and RetroPie, along with configuring an Arduino Uno R3 as a custom gamepad. Additionally, it covers how to install games on your emulator through SSH.
 
-- **Arduino UNO R3**
-- **Shield with 4 buttons and a joystick** (see photo)
+## Hardware Requirements
 
-## Software Setup
+- **Raspberry Pi 4** (with power supply, microSD card, and case)
+- **Arduino Uno R3** (with necessary buttons and joystick or a shield)
+- **MicroSD card** (at least 32GB recommended, FAT32)
+- **HDMI cable** (for connecting Raspberry Pi to a display)
+- **Keyboard and Mouse** (for initial setup)
+- **Network connection** (Ethernet or Wi-Fi)
 
-1. **Arduino IDE**
-2. **UnoJoy Library**: This library, along with the necessary files for Atmel's FLIP, can be downloaded from [this GitHub repository](https://github.com/AlanChatham/UnoJoy). Make sure to add the library to your Arduino IDE.
-3. **Java Runtime Environment (JRE)**: You'll need an updated JRE to use the `TurnIntoJoystick` function from the UnoJoy folder. Without it, you might encounter the `jvm.dll` error. If updating fails, try reinstalling JRE. I recommend version `jre-8u321-windows-i586`, which you can find on Java's official site or through a quick search.
+## Software Requirements
 
-   You can verify your JRE installation by:
-   1. Opening the Command Prompt (`Start > Programs > Accessories > Command Prompt`).
-   2. Typing `java -version` and pressing Enter.
+- **RetroPie**: A free software that turns your Raspberry Pi into a retro-gaming console. [Official RetroPie Website](https://retropie.org.uk/)
+- **Arduino IDE**: Required for configuring the Arduino Uno as a gamepad.
+- **UnoJoy Library**: A library that allows the Arduino Uno to function as a USB gamepad.
+- **SSH Client**: For remote access to your Raspberry Pi (e.g., PuTTY, Terminal).
 
-## Explanation
+## Setup Guide
 
-The `.ino` file provided is designed to mimic an Xbox 360 controller (originally intended for PS3 controllers, which can be found in the Example Sketches).
+### 1. Setting Up Raspberry Pi 4 with RetroPie
 
-### Key Points:
-1. **Include the UnoJoy Library**: This library is specifically created for Arduino Uno. You can find it [here](https://github.com/AlanChatham/UnoJoy).
-2. **Variable Creation**: Use `uint8_t` for lower memory usage. Assign the correct variables based on the digital pins your shield uses.
-3. **Analog Inputs**: `x` and `y` correspond to the analog inputs.
-4. **setupPins Function**: This function checks the inputs of the digital pins, setting them to HIGH. The button is pressed when the pin is LOW (logic).
-5. **Loop Function**: The `dataForController_t getControllerData` function is used to configure your inputs to behave as a joystick.
-   - Use `BlankDataForController` to clean up any garbage data. This built-in UnoJoy function ensures proper conversion.
-6. **Shield Configuration**: The example provided configures the shield to have buttons corresponding to triangle, circle, square, and cross, which are used for in-game actions. The `Start` button accesses the menu, and the X and Y axes are configured with a conversion using the absolute value of the Y-axis.
+Follow these steps to set up your Raspberry Pi 4 with RetroPie:
 
-## Putting It All Together
+1. Download the latest RetroPie image from the [official website](https://retropie.org.uk/download/).
+2. Write the RetroPie image to your microSD card using e.g. Raspberry Pi Imager.
+3. Insert the microSD card into the Raspberry Pi 4 and power it on.
+4. Complete the initial RetroPie setup, including configuring your keyboard and connecting to Wi-Fi. As a system, choose legacy one, such as Legacy Buster OS. For location, select USA, America.
+5. After callibration, open terminal and perform `sudo apt-get update && sudo apt-get upgrade`.
+6. Find `locale` settings file and ensure the settings are: `LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_CTYPE="en_US.UTF-8" LC_NUMERIC="en_US.UTF-8" LC_TIME="en_US.UTF-8" LC_COLLATE="en_US.UTF-8" LC_MESSAGES="en_US.UTF-8" LC_PAPER="en_US.UTF-8" LC_NAME="en_US.UTF-8" LC_ADDRESS="en_US.UTF-8" LC_TELEPHONE="en_US.UTF-8" LC_MEASUREMENT="en_US.UTF-8" LC_IDENTIFICATION="en_US.UTF-8" LC_ALL=en_US.UTF-8`. You can use e.g. nano to edit those properties.
+7. Use installation script: `cd RetroPie-Setup && chmod +x retropie_setup.sh && sudo ./retropie_setup.sh`.
+8. Launch RetroPie using `emulationstation` command.
 
-1. Connect the Arduino to your computer.
-2. Upload the `.ino` file containing your gamepad's code to the Arduino.
-3. Use a tool (e.g., a screwdriver) to connect to the pins, entering Arduino's DFU mode.
-4. Launch `TurnIntoJoystick` from the UnoJoy folder.
-5. Unplug the Arduino.
-6. Plug it back in with your shield attached.
-7. Enjoy your new gamepad!
+**Possible trouble**
+If an error occured during installation, perform the following:
+1. Navigate: `Manage Packages -> dependancy packages -> mesa-drm`. Launch: `install from source`.
+2. Navigate: `Manage Packages -> dependancy packages -> omxiv`. Launch: `install from source`.
+3. Perform the "Basic" installation.
 
-## Notes
 
-1. **PC Compatibility**: This gamepad works with a PC. It is unlikely to work with consoles like the PS3 or Xbox 360 due to security chips.
-2. **Configurable Setup**: You can switch between PS3 and Xbox 360 configurations (or create your own) using `if` statements in the `setup` function. For example, if button D3 is pressed when the Gamepad is turned on, it will load the first configuration; if D4 is pressed, it will load the second, and so on. However, one configuration is usually sufficient, so I haven't provided additional code for this. Feel free to adjust the pin assignments as needed.
+### 2. Configuring Arduino Uno as a Gamepad
+
+To use your Arduino Uno R3 as a gamepad, follow these steps:
+
+1. Install the Arduino IDE on your computer.
+2. Download and install the UnoJoy library from [this GitHub repository](https://github.com/AlanChatham/UnoJoy).
+3. Program your Arduino Uno with the provided `.ino` file that configures it as a gamepad.
+4. Connect the buttons and joystick to the appropriate pins on the Arduino Uno.
+5. Follow the instructions from the UnoJoy library to flash the Arduino and enable joystick mode.
+
+### 3. Installing Games via SSH
+
+To add games to your RetroPie setup, you can use SSH for easy file transfer:
+
+1. Enable SSH on your Raspberry Pi.
+2. Use an SSH client (e.g. PuTTY, FileZilla) to connect to your Raspberry Pi.
+3. Navigate to the appropriate folder on your Raspberry Pi (e.g. `/home/pi/RetroPie/roms/`).
+4. Upload your game files to the corresponding emulator folder (e.g., `nes` for NES games).
+5. Restart EmulationStation to load the newly added games.
+
+## Troubleshooting
+
+If you encounter any issues during the setup process, consider the following solutions:
+
+- **No SSH Access**: Ensure that SSH is enabled on the Raspberry Pi and that you have the correct IP address.
+- **Gamepad Not Working**: Double-check the Arduino wiring and configuration. Make sure the UnoJoy library was correctly installed.
