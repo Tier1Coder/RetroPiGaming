@@ -1,6 +1,7 @@
 import serial.tools.list_ports
 import pyautogui
 
+
 ports = serial.tools.list_ports.comports()     
 serialInst = serial.Serial()
 
@@ -32,13 +33,13 @@ def keyDown(key):
     if key not in keysDown:
         keysDown[key] = True
         pyautogui.keyDown(key)
-        #  print('Down: ', key)
+
 
 def keyUp(key):
     if key in keysDown:
         del(keysDown[key])
         pyautogui.keyUp(key)
-        #  print('Up: ', key)
+
 
 def handleJoyStickAsArrowKeys(x, y):
     if x > 0:
@@ -74,6 +75,7 @@ def handleButtonState(state):
         else:
             keyUp(keyMap[i])
 
+
 while True:
     if serialInst.in_waiting:
         packet = serialInst.readline()
@@ -89,11 +91,3 @@ while True:
             buttonState = int(values[2])
             handleJoyStickAsArrowKeys(dx, dy * -1)
             handleButtonState(buttonState)
-
-
-
-
-
-
-
-
