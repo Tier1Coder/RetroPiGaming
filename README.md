@@ -1,6 +1,10 @@
 # RetroPie Gaming Setup on Raspberry Pi 4 with Arduino Uno R3 Gamepad
 
 This repository provides a comprehensive guide for setting up a retro gaming console using a Raspberry Pi 4, installing RetroPie, configuring an Arduino Uno as a gamepad, and installing games via SSH. Whether you're a retro gaming enthusiast or a beginner, this guide will help you build and configure your own gaming console.
+![completed_project](https://github.com/user-attachments/assets/0cae4e70-fd8d-4249-aab7-5c2f98712ed2)
+
+https://github.com/user-attachments/assets/bfca9009-48d0-4dd2-8a69-17c79cd01a2b
+
 
 ## Table of Contents
 
